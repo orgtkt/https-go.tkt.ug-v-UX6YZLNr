@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>You're All Set! - Ticket Confirmation</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #f7f5f2;
+      --card-bg: #fff;
+      --accent: #d49a3a;
+      --accent2: #926e00;
+      --header: #1a1a1a;
+      --text: #363739;
+      --subtitle: #646464;
+      --border: #f0eede;
+      --button: #ebb448;
+      --shadow: 0 2px 32px #eae8e3;
+      --radius: 15px;
+      --blue: #4f81ff;
+      --royal: #637dff;
+      --magenta: #d35dcc;
+      --green: #15bb65;
+    }
+
+    body {
+      font-family: "Montserrat", Arial, sans-serif;
+      margin: 0;
+      background: var(--primary);
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 14px 48px;
+    }
+
+    header {
+      text-align: center;
+      margin: 40px 0 24px;
+    }
+
+    .circle-check {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #d5ffe6;
+      color: #109e3b;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 16px;
+      font-size: 2em;
+      border: 3px solid #fff;
+      box-shadow: var(--shadow);
+      user-select: none;
+    }
+
+    h2 {
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin: 4px 0;
+    }
+    .main-heading {
+      color: var(--accent2);
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 10px 0 8px;
+    }
+
+    .subtitle {
+      color: var(--subtitle);
+      font-size: 1.05rem;
+      margin-bottom: 12px;
+    }
+
+    main {
+      text-align: left;
+    }
+
+    .ticket-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px 28px 22px;
+      margin: 0 auto 24px;
+      max-width: 530px;
+      position: relative;
+    }
+
+    .ticket-status {
+      font-size: 0.9em;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      background: var(--accent);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 8px;
+      position: absolute;
+      left: 30px;
+      top: 24px;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+
+    /* Verified state color */
+    .ticket-status.verified {
+      background: #109e3b; /* green */
+    }
+
+    .match-title {
+      margin: 32px 0 10px 0;
+      font-weight: 600;
+      font-size: 1.25em;
+    }
+
+    .ticket-details {
+      font-size: 1em;
+      margin-bottom: 6px;
+      color: var(--subtitle);
+    }
+
+    .ticket-details > div {
+      margin-bottom: 8px;
+    }
+
+    .ticket-icon {
+      font-size: 1.1em;
+      margin-right: 7px;
+      vertical-align: middle;
+      color: var(--accent2);
+    }
+
+    .ticket-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .link-support {
+      color: var(--accent2);
+      text-decoration: underline;
+      font-size: 0.97em;
+      margin-right: auto;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .link-support:hover {
+      color: var(--button);
+    }
+
+    .share-btn,
+    .directions-btn {
+      background: #f9efdb;
+      color: #222;
+      border: none;
+      border-radius: 7px;
+      padding: 7px 18px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-left: 5px;
+      transition: background-color 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .share-btn:hover {
+      background: #e5d3a5;
+    }
+    .directions-btn {
+      background: var(--button);
+      color: #fff;
+    }
+    .directions-btn:hover {
+      background: #c29920;
+    }
+
+    .next-steps {
+      margin: 28px auto 18px;
+      max-width: 520px;
+      text-align: center;
+    }
+    .next-steps h3 {
+      margin-bottom: 18px;
+      font-weight: 600;
+      font-size: 1.25em;
+      color: var(--header);
+    }
+    .steps-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+    .step-box {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px 18px;
+      min-width: 200px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      text-align: left;
+      color: var(--text);
+      user-select: none;
+    }
+    .step-icon {
+      background: #f9efdb;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+      color: var(--accent2);
+      user-select: none;
+    }
+
+    .faq {
+      margin: 32px auto 20px;
+      padding: 0 20px;
+      max-width: 520px;
+    }
+    .faq h3 {
+      text-align: center;
+      margin-bottom: 16px;
+      font-weight: 600;
+      font-size: 1.25em;
+      color: var(--header);
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 7px;
+      box-shadow: 0 1px 10px #eae8e3;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.98em;
+      color: var(--text);
+      user-select: none;
+      cursor: default;
+    }
+    .expand {
+      color: var(--subtitle);
+      font-weight: 700;
+      font-size: 1.2em;
+      user-select: none;
+    }
+
+    .share-experience {
+      text-align: center;
+      margin: 42px 0 10px;
+      color: var(--header);
+    }
+    .share-experience h3 {
+      font-weight: 600;
+      font-size: 1.25em;
+      margin-bottom: 6px;
+    }
+    .share-experience p {
+      margin: 0 0 14px 0;
+      color: var(--subtitle);
+      font-size: 1rem;
+    }
+    .social-icons {
+      margin: 16px 0 0 0;
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+    }
+    .social {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #eee;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .social.blue {
+      background: var(--blue);
+    }
+    .social.royal {
+      background: var(--royal);
+    }
+    .social.magenta {
+      background: var(--magenta);
+    }
+    .social.green {
+      background: var(--green);
+    }
+    .social:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.06);
+    }
+
+    footer {
+      font-size: 0.9em;
+      color: var(--subtitle);
+      padding: 24px 20px 18px;
+      border-top: 1px solid var(--border);
+      background: var(--primary);
+      user-select: none;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px 30px;
+      justify-content: flex-start;
+      margin-bottom: 14px;
+    }
+    .footer-links a {
+      color: var(--subtitle);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.25s ease, text-decoration 0.25s ease;
+      cursor: pointer;
+    }
+    .footer-links a:hover {
+      text-decoration: underline;
+      color: var(--accent2);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85em;
+      color: var(--subtitle);
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      background: #ffe600;
+      color: #111;
+      font-weight: 700;
+      font-size: 1.4em;
+      border-radius: 50%;
+      padding: 6px 16px;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .footer-copyright {
+      flex-grow: 1;
+      min-width: 200px;
+      margin: 6px 12px 6px 0;
+    }
+
+    .footer-payments {
+      min-width: 160px;
+      white-space: nowrap;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 650px) {
+      .container {
+        padding-bottom: 28px;
+      }
+      .ticket-card,
+      .next-steps,
+      .faq {
+        max-width: 98vw;
+        padding: 18px 4vw;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .steps-row {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .footer-links {
+        justify-content: center;
+        gap: 14px 18px;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        justify-content: center;
+        gap: 6px;
+        text-align: center;
+      }
+      .footer-copyright {
+        margin: 0;
+      }
+      .footer-payments {
+        min-width: auto;
+      }
+    }
+
+    /* QR code container styles */
+    #qrcode {
+      margin: 20px auto 0 auto;
+      width: 128px;
+      height: 128px;
+      user-select: none;
+      cursor: pointer;
+    }
+    #qr-instruction {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--subtitle);
+      margin-top: 6px;
+      user-select: none;
+      max-width: 530px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="circle-check" aria-label="Success">&#10004;</div>
+      <h2>Hi, Adam Munyendo</h2>
+      <h1 class="main-heading">You're All Set!</h1>
+      <p class="subtitle">Your ticket is valid. Get ready for an amazing experience!</p>
+    </header>
+
+    <main>
+      <section class="ticket-card" aria-label="Ticket Information">
+        <span id="ticket-status" class="ticket-status">VERIFIED TICKET</span>
+        <h2 class="match-title">Kenya VS Morocco</h2>
+
+        <div class="ticket-details">
+          <div class="ticket-date" aria-label="Date and Time">
+            <span class="ticket-icon" aria-hidden="true">&#128197;</span>
+            Sun, 10 Aug 2025<br />
+            12:00:00
+          </div>
+          <div class="ticket-venue" aria-label="Venue">
+            <span class="ticket-icon" aria-hidden="true">&#127970;</span>
+            Venue<br />
+            Moi International Sports Centre
+          </div>
+        </div>
+
+        <div class="ticket-actions">
+          <a href="#" class="link-support" aria-label="Contact Support">Contact Support</a>
+          <button type="button" class="share-btn" aria-label="Share Ticket" id="shareBtn">Share</button>
+          <!-- Open Google Maps to Moi International Sports Centre -->
+          <button
+            type="button"
+            class="directions-btn"
+            aria-label="Get Directions"
+            id="directionsBtn"
+            title="Open Google Maps"
+          >
+            Get Directions
+          </button>
+        </div>
+
+        <!-- QR Code container -->
+        <div id="qrcode" title="Scan ticket QR code"></div>
+        <div id="qr-instruction">Scan this QR code to verify your ticket</div>
+      </section>
+
+      <section class="next-steps" aria-label="Next Steps">
+        <h3>What's next?</h3>
+        <div class="steps-row">
+          <article class="step-box" aria-label="Add to Calendar">
+            <div class="step-icon" aria-hidden="true">&#128197;</div>
+            <div>
+              <b>Add to Calendar</b>
+              <p>Don't forget the date! Add this event to your calendar.</p>
+            </div>
+          </article>
+          <article class="step-box" aria-label="Plan Your Trip">
+            <div class="step-icon" aria-hidden="true">&#128205;</div>
+            <div>
+              <b>Plan Your Trip</b>
+              <p>Check out parking, public transport, and nearby hotels.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="faq" aria-label="Frequently Asked Questions">
+        <h3>Frequently Asked Questions</h3>
+        <div class="faq-item" tabindex="0" role="button" aria-expanded="false" aria-controls="faq1">
+          What time should I arrive?
+          <span class="expand">+</span>
+        </div>
+        <div class="faq-item" tabindex="0" role="button" aria-expanded="false" aria-controls="faq2">
+          What items are not allowed?
+          <span class="expand">+</span>
+        </div>
+        <div class="faq-item" tabindex="0" role="button" aria-expanded="false" aria-controls="faq3">
+          Is there parking available?
+          <span class="expand">+</span>
+        </div>
+      </section>
+
+      <section class="share-experience" aria-label="Share the Experience">
+        <h3>Share the Experience</h3>
+        <p>Let your friends know you're attending!</p>
+        <div class="social-icons" role="list">
+          <span class="social blue" role="listitem" tabindex="0" aria-label="Share on Facebook"></span>
+          <span class="social royal" role="listitem" tabindex="0" aria-label="Share on Twitter"></span>
+          <span class="social magenta" role="listitem" tabindex="0" aria-label="Share on Instagram"></span>
+          <span class="social green" role="listitem" tabindex="0" aria-label="Share on WhatsApp"></span>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <nav class="footer-links" aria-label="Footer Navigation">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms &amp; Conditions</a>
+        <a href="#">Care Center &amp; FAQs</a>
+        <a href="#">Recover Your Ticket</a>
+        <a href="#">Verify Your Ticket</a>
+      </nav>
+      <div class="footer-bottom">
+        <span class="footer-logo" aria-label="Company Logo">m.</span>
+        <span class="footer-copyright">&copy; 2025 MOOKH. All rights reserved.</span>
+        <span class="footer-payments" aria-label="Flexible payment options including Visa, Mastercard, Apple Pay">
+          Flexible Payment Options: Visa, Mastercard, Apple Pay
+        </span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- QRCode.js lib (minified) included inline -->
+  <script>
+  /*! QRCode.js v1.0.0 - simple QR code generator https://davidshimjs.github.io/qrcodejs/ */
+  // QRCode.js is quite long, so here I will include a minimal version inline:
+  // For full minified source: https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js
+  
+  // Instead I'll load it via CDN for simplicity:
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+  <script>
+    // Google Map location URL for Moi International Sports Centre
+    const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=Moi+International+Sports+Centre';
+
+    const directionsBtn = document.getElementById('directionsBtn');
+    directionsBtn.addEventListener('click', () => {
+      window.open(mapsUrl, '_blank');
+    });
+
+        // Toggle verification status on QR code click (simulate scan)
+    const ticketStatus = document.getElementById('ticket-status');
+    const qrCodeContainer = document.getElementById('qrcode');
+
+    qrCodeContainer.addEventListener('click', () => {
+      if (ticketStatus.textContent.includes('VERIFIED')) {
+        ticketStatus.textContent = 'TICKET VERIFIED';
+        ticketStatus.classList.add('verified');
+        alert('Ticket Verified! This ticket has now been verified.');
+      } else {
+        ticketStatus.textContent = 'VERIFIED TICKET';
+        ticketStatus.classList.remove('verified');
+        alert('Verification reset. Click QR again to verify.');
+      }
+    });
+  </script>
+</body>
+</html>
+
